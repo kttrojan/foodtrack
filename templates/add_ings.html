@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add recipe
+{% endblock %}
+
+{% block main %}
+    <!-- ADD AND REMOVE TABLE ROW SCRIPT -->
+    <script src="/static/js/add.js"></script>
+    <!-- MAIN FORM OF THE PAGE -->
+    <form action="add_ings" method="post" id="add_form">
+        <!-- INGREDIENTS -->
+        <div class="mb-3">
+            <table class="table table-striped table-dark" id="ing_tab">
+                <caption><h4>Add Ingredients</h4></caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Remove Ingredient</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <td>
+                        <input autocomplete="off" class="form-control mx-auto w-auto" name="ingredient[]" placeholder="Ingredient" type="text">
+                    </td>
+                    <td>
+                        <input autocomplete="off" class="form-control mx-auto w-auto" name="quantity[]" placeholder="1" type="text">
+                    </td>
+                    <td>
+                        <select class="form-control mx-auto w-auto"name="unit[]" id="unit">
+                        <option name="option[]" value="">--Choose unit--</option>
+                        <option name="option[]" value="pcs">pcs</option>
+                        <option name="option[]" value="g">gram [g]</option>
+                        <option name="option[]" value="kg">kilogram [kg]</option>
+                        <option name="option[]" value="l">liter [l]</option>
+                        <option name="option[]" value="ml">mililiter [ml]</option>
+                        <option name="option[]" value="cm">centimeter [cm]</option>
+                        <option name="option[]" value="tsp">teaspoon [tsp]</option>
+                        <option name="option[]" value="tbsp">tablespoon [tbsp]</option>
+                        <option name="option[]" value="cups">cup [c]</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="btn btn-primary" name="remove" value="Remove" type="button" onclick="deleteRow(this)">
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary" name="add_row" type="button" id="add_row" onclick="addField('ing_tab')">Add ingredient</button>
+        </div>
+    </form>
+        <div class="static">
+            <button class="btn btn-primary corner" type="submit" form="add_form" id="add_ingredients" name="add_recipe">Add ingredients</button>
+        </div>
+        <form action="canceled">
+            <button class="btn btn-danger corner-left" type="submit" name="cancel">Cancel</button>
+        </form>
+{% endblock %}

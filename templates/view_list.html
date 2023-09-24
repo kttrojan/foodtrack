@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ list_db[0]["name"] }}
+{% endblock %}
+
+{% block main %}
+<h1><strong>{{ list_db[0]["name"] }}</strong></h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Ingredient:</th>
+            <th scope="col">Quantity:</th>
+            <th scope="col">Unit:</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <th scope="col">{{ ing_db[item]["name"] }}</th>
+            <th scope="col">{{ ing_db[item]["quantity"] }}</th>
+            <th scope="col">{{ ing_db[item]["unit"] }}</th>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}

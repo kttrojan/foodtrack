@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipes
+{% endblock %}
+
+{% block main %}
+<script src="/static/js/search.js"></script>
+<label for="myInput"><h4 id="filter"><strong>Filter recipes by name:</strong></h4></label>
+<input class="form-control mx-auto w-50" type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter recipe's name..."><table id="recipes_table" class="table table-striped table-dark lower" cellspacing="0" width="100%">
+  <table class="table table-striped table-dark" id="table">
+    <caption class="table caption-top">Your recipes:</caption>
+    <thead>
+      <tr>
+        <th scope="col">Number:</th>
+        <th scope="col">Added:</th>
+        <th scope="col">Name:</th>
+        <th scope="col">Portions:</th>
+        <th scope="col">Show Recipe:</th>
+        <th scope="col">Delete Recipe:</th>
+        <th scope="col">Make a Shopping List:</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+      <tr>
+        <th id="id" scope="row">{{item + 1}}</th>
+        <td>{{ recipes_db[item]["date_added"] }}</td>
+        <td>{{ recipes_db[item]["name"] }}</td>
+        <td>{{ recipes_db[item]["portions"] }}</td>
+        <td>
+          <form action="/view_recipe">
+            <button class="btn btn-success" type="submit" name="action" value="{{ recipes_db[item]['id'] }}">View</button>
+          </form>
+        </td>
+        <td>
+          <form action="/delete_recipe" onsubmit="return confirm('Content will be deleted, do you want to continue?');">
+            <button class="btn btn-danger" type="submit" name="action" value="del{{ recipes_db[item]['id'] }}">Delete</button>
+          </form>
+        </td>
+        <td>
+          <form action="/rec2list">
+            <button class="btn btn-warning" type="submit" name="action" value="list{{ recipes_db[item]['id'] }}">Make a List</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      <div class="fixed">
+        <form action="/recipes" method="post">
+          <button class="btn btn-primary corner" type="submit" name="action" value="create">Create a recipe</button>
+        </form>
+      </div>
+      </tbody>
+  </table>
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipes you can cook
+{% endblock %}
+
+{% block main %}
+<script src="/static/js/search.js"></script>
+<label for="myInput"><h4 id="filter"><strong>Filter recipes by name:</strong></h4></label>
+<input class="form-control mx-auto w-50" type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter recipe's name..."><table id="recipes_table" class="table table-striped table-dark lower" cellspacing="0" width="100%">
+  <table class="table" id="table">
+    <caption class="table caption-top">Here are recipes you can cook:</caption>
+    <thead>
+      <tr>
+        <th scope="col">Number:</th>
+        <th scope="col">Name:</th>
+        <th scope="col">Show Recipe:</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+      <tr>
+        <td>{{item + 1}}</th>
+        <td>{{ recipe_matches[item][1] }}</td>
+        <td>
+          <form action="/view_recipe">
+            <button class="btn btn-success" type="submit" name="action" value="{{ recipe_matches[item][0] }}">View</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+
+
+{% endblock %}

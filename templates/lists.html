@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipes
+{% endblock %}
+
+{% block main %}
+<script src="/static/js/search.js"></script>
+<label for="myInput"><h4 id="filter"><strong>Filter shopping lists by name</strong></h4></label>
+<input class="form-control mx-auto w-50" type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter list's name...">
+<table id="table" class="table table-striped table-dark lower" cellspacing="0" width="100%">
+  <caption class="table caption-top">Your shopping lists:</caption>
+  <thead>
+    <tr>
+      <th scope="col">Number:</th>
+      <th scope="col">Added:</th>
+      <th scope="col">Name:</th>
+      <th scope="col">Show Ingredients:</th>
+      <th scope="col">Delete List:</th>
+      <th scope="col">Modify List:</th>
+      <th scope="col">Add to Fridge:</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for item in items %}
+    <tr>
+      <th id="id" scope="row">{{item + 1}}</th>
+      <td>{{ shop_lists_db[item]["date_added"] }}</td>
+      <td>{{ shop_lists_db[item]["name"] }}</td>
+      <td>
+        <form action="/view_list" method="post">
+          <button class="btn btn-primary" type="submit" name="action" value="{{ shop_lists_db[item]['id'] }}">View</button>
+        </form>
+      </td>
+      <td>
+        <form action="/delete_list" onsubmit="return confirm('Content will be deleted, do you want to continue?');">
+          <button class="btn btn-danger" type="submit" name="action" value="del{{ shop_lists_db[item]['id'] }}">Delete</button>
+        </form>
+      </td>
+      <td>
+        <form action="/modify_list">
+          <button class="btn btn-warning" type="submit" name="action" value="mod{{ shop_lists_db[item]['id'] }}">Edit</button>
+        </form>
+      </td>
+      <td>
+        <form action="/add2fridge" onsubmit="return confirm('Content will be deleted, do you want to continue?');">
+          <button class="btn btn-success" type="submit" name="action" value="fridge{{ shop_lists_db[item]['id'] }}">Add</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    <div class="fixed">
+      <form action="/add_list">
+        <button class="btn btn-primary corner" type="submit" name="action" value="create">Create a shopping list</button>
+      </form>
+    </div>
+    </tbody>
+  </table>
+
+
+{% endblock %}

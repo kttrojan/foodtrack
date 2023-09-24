@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ recipe_db[0]["name"] }}
+{% endblock %}
+
+{% block main %}
+
+<div class="image-div">
+    <img class="img-responsive recipe" src="{{ url_for('static', filename=recipe_db[0]['image']) }}" alt="Picute of a dish">
+</div>
+<h1><strong>{{ recipe_db[0]["name"] }}</strong></h1>
+<h3><strong>Portions: {{ recipe_db[0]["portions"] }}</strong></h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Ingredient:</th>
+            <th scope="col">Quantity:</th>
+            <th scope="col">Unit:</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <th scope="col">{{ ing_db[item]["name"] }}</th>
+            <th scope="col">{{ ing_db[item]["quantity"] }}</th>
+            <th scope="col">{{ ing_db[item]["unit"] }}</th>
+          </tr>
+      {% endfor %}
+    </tbody>
+</table>
+<div>
+    <textarea class="tips lower">{{ recipe_db[0]["tips"] }}</textarea>
+</div>
+
+
+{% endblock %}
