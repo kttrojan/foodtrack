@@ -217,7 +217,6 @@ def add_ings():
         units = request.form.getlist('unit[]')
         unit_options = ["pcs", "g", "kg", "l", "ml", "cm", "tsp", "tbsp", "cups"]
         items = range(len(ingredients))
-
         # Check for empty inputs
         for item in items:
             if ingredients[item] == "" or quantities[item] == 0:
@@ -244,7 +243,6 @@ def add_ings():
                 # Insert ingredient into user's fridge
                 db.execute("INSERT INTO fridges (user_id, ingredient_id, quantity) VALUES (?, ?, ?)", \
                             user_id, ing_id, quantities[item])
-                return redirect("/")
             else:
                 # Get current ingredient's quantity in the user's fridge
                 curr_quantity = db.execute("SELECT quantity FROM fridges WHERE user_id = ? AND ingredient_id = ?", \
@@ -254,7 +252,7 @@ def add_ings():
                 # Update the fridge with the sum of the current and added quantity
                 db.execute("UPDATE fridges SET quantity = ? WHERE user_id = ? AND ingredient_id = ?", \
                            overall, user_id, ing_id)
-            return redirect("/")
+        return redirect("/")
 
 @app.route("/recipes", methods = ["GET", "POST"])
 @login_required
